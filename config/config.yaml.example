@@ -1,0 +1,32 @@
+# Admin Configuration Example
+# Copy this file to config.yaml and update with your values
+
+admin:
+  # Firestore Configuration
+  firestore:
+    # Leave empty to use GOOGLE_CLOUD_PROJECT environment variable
+    project_id: ""
+    
+    # Firestore collection prefix (MUST match pipeline config/config.yaml)
+    # Default: "tiny_tales"
+    # This should match: pipeline.database.firestore_collection_prefix in pipeline config
+    collection_prefix: "tiny_tales"
+  
+  # GCS Configuration
+  gcs:
+    # Leave empty to use GCS_BUCKET environment variable
+    bucket: ""
+    
+    # Leave empty to use GOOGLE_CLOUD_PROJECT environment variable
+    project_id: ""
+  
+  # Pub/Sub Configuration
+  pubsub:
+    # Pub/Sub topic name for pipeline triggers
+    # Leave empty to use PUBSUB_TOPIC environment variable
+    # Default: "tiny-tales-books-topic"
+    topic: "tiny-tales-books-topic"
+    
+    # Leave empty to use GOOGLE_CLOUD_PROJECT environment variable
+    project_id: ""
+

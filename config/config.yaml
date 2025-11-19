@@ -1,0 +1,17 @@
+# Admin Configuration
+admin:
+  # Firestore Configuration
+  firestore:
+    project_id: ""  # If empty, will read from GOOGLE_CLOUD_PROJECT environment variable
+    collection_prefix: "tiny_tales"  # Firestore collection prefix (must match pipeline config)
+  
+  # GCS Configuration
+  gcs:
+    bucket: ""  # If empty, will read from GCS_BUCKET environment variable
+    project_id: ""  # If empty, will read from GOOGLE_CLOUD_PROJECT environment variable
+  
+  # Pub/Sub Configuration
+  pubsub:
+    topic: "tiny-tales-books-topic"  # If empty, will read from PUBSUB_TOPIC environment variable
+    project_id: ""  # If empty, will read from GOOGLE_CLOUD_PROJECT environment variable
+
