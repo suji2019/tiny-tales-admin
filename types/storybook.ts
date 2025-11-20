@@ -8,6 +8,7 @@ export interface PageSection {
 export interface SubStory {
   sub_story_number: number;
   title: string;
+  content?: string; // Mini story content
   sections: PageSection[];
 }
 

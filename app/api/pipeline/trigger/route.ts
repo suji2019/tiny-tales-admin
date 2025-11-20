@@ -3,6 +3,7 @@ import { PubSub } from '@google-cloud/pubsub'
 import fs from 'fs'
 import path from 'path'
 import yaml from 'js-yaml'
+import { getFirestoreClient } from '@/lib/firestore'
 
 function loadConfig() {
   const configPath = path.join(process.cwd(), 'config', 'config.yaml')
@@ -58,10 +59,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Use the bookSafeTitle as bookTitle directly
-    // Pipeline can process any book title, regardless of whether it's registered in Firestore
     // Convert safe_title back to a readable title (replace underscores with spaces)
     const bookTitle = bookSafeTitle.replace(/_/g, ' ')
     const chapterCount = 1 // Default chapter count, pipeline will determine actual count during processing
+
+    // Upsert book in Firestore (create if not exists, update if exists)
+    try {
+      const firestore = getFirestoreClient()
+      await firestore.upsertBook(bookSafeTitle, {
+        title: bookTitle,
+        chapter_count: chapterCount,
+        status: 'pending',
+      })
+      console.log(`Book upserted in Firestore: ${bookSafeTitle}`)
+    } catch (error: any) {
+      console.warn(`Failed to upsert book in Firestore: ${error.message}`)
+      // Continue with pipeline trigger even if Firestore upsert fails
+    }
 
     // Initialize Pub/Sub
     const pubsub = new PubSub({ projectId: PROJECT_ID })
